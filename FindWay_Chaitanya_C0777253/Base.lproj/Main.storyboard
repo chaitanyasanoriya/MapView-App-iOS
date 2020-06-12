@@ -104,47 +104,40 @@
                                                         <blurEffect style="regular"/>
                                                     </vibrancyEffect>
                                                 </visualEffectView>
-                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fy-wv-Shy">
-                                                    <rect key="frame" x="15" y="15" width="90" height="25"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="90" id="VLw-2B-bup"/>
-                                                        <constraint firstAttribute="height" constant="25" id="xXE-hb-2NN"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Find Way"/>
-                                                    <connections>
-                                                        <action selector="centerLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mk5-qZ-ym3"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="8fy-wv-Shy" firstAttribute="centerY" secondItem="Rf5-5O-K3k" secondAttribute="centerY" id="BwS-Hq-m2x"/>
-                                                <constraint firstItem="8fy-wv-Shy" firstAttribute="centerX" secondItem="Rf5-5O-K3k" secondAttribute="centerX" id="DV7-jl-eaG"/>
-                                            </constraints>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="55" id="23H-Hc-DUf"/>
+                                            <constraint firstAttribute="width" constant="120" id="AeT-0r-JSN"/>
                                             <constraint firstAttribute="height" constant="55" id="zun-yP-a8C"/>
                                         </constraints>
                                         <blurEffect style="regular"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="15"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
-                                        </userDefinedRuntimeAttributes>
                                     </visualEffectView>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fy-wv-Shy">
+                                        <rect key="frame" x="15" y="15" width="90" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="90" id="VLw-2B-bup"/>
+                                            <constraint firstAttribute="height" constant="25" id="xXE-hb-2NN"/>
+                                        </constraints>
+                                        <state key="normal" title="Find Way">
+                                            <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="centerLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mk5-qZ-ym3"/>
+                                            <action selector="findWayButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="In7-Mc-7J8"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="FqX-UT-nM4"/>
                                     <constraint firstAttribute="width" constant="120" id="J8n-N6-8GJ"/>
-                                    <constraint firstItem="sJb-0P-TCa" firstAttribute="top" secondItem="9xT-hH-bke" secondAttribute="top" id="Tlo-9j-edm"/>
-                                    <constraint firstAttribute="bottom" secondItem="sJb-0P-TCa" secondAttribute="bottom" id="Tv9-Xr-dmc"/>
-                                    <constraint firstAttribute="trailing" secondItem="sJb-0P-TCa" secondAttribute="trailing" id="XFR-bh-wcB"/>
-                                    <constraint firstItem="sJb-0P-TCa" firstAttribute="leading" secondItem="9xT-hH-bke" secondAttribute="leading" id="eWN-V1-1DX"/>
+                                    <constraint firstItem="sJb-0P-TCa" firstAttribute="top" secondItem="9xT-hH-bke" secondAttribute="top" id="NCd-5m-nMf"/>
+                                    <constraint firstItem="sJb-0P-TCa" firstAttribute="leading" secondItem="9xT-hH-bke" secondAttribute="leading" id="ZPK-UZ-qrB"/>
+                                    <constraint firstItem="8fy-wv-Shy" firstAttribute="centerY" secondItem="9xT-hH-bke" secondAttribute="centerY" id="oUS-EX-IIj"/>
+                                    <constraint firstItem="8fy-wv-Shy" firstAttribute="centerX" secondItem="9xT-hH-bke" secondAttribute="centerX" id="qI1-Hk-HhG"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="15"/>
+                                        <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
