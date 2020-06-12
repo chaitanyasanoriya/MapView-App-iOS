@@ -17,17 +17,21 @@ class ViewController: UIViewController {
     let mLocationManager = CLLocationManager()
     let REGION_IN_METERS: Double = 10000
     var mDestination: CLLocation?
+    var mTransportType: MKDirectionsTransportType = .automobile
+    @IBOutlet weak var mSegmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
         removeTapGestures()
+        addDoubleTapGesture()
+    }
+    
+    func addDoubleTapGesture()
+    {
         let tap = UITapGestureRecognizer(target: self, action: #selector(addAnnotation))
         tap.numberOfTapsRequired = 2
-        //        mMapView.add(tap as! MKOverlay)
-        //IOS 9
         mMapView.addGestureRecognizer(tap)
-        // Do any additional setup after loading the view.
     }
     
     func removeTapGestures()
@@ -131,56 +135,57 @@ class ViewController: UIViewController {
         })
     }
     
-        func getDirections()
+    func getDirections()
+    {
+        guard let location = mLocationManager.location?.coordinate else
         {
-            guard let location = mLocationManager.location?.coordinate else
-            {
-                //TODO: Alert User
-                return
-            }
-            if mDestination != nil
-            {
-                let request = createDirectionRequest(from: location)
-                let directions = MKDirections(request: request)
+            //TODO: Alert User
+            return
+        }
+        if mDestination != nil
+        {
+            mMapView.removeOverlays(mMapView.overlays)
+            let request = createDirectionRequest(from: location)
+            let directions = MKDirections(request: request)
+            
+            directions.calculate { [unowned self] (response, error) in
+                //TODO: Handle error if needed
                 
-                directions.calculate { [unowned self] (response, error) in
-                    //TODO: Handle error if needed
-                    
-                    guard let response = response else
-                    {
-                        //TODO: show response not available in an alert
-                        return
-                    }
-                    
-                    for route in response.routes
-                    {
-                        self.mMapView.addOverlay(route.polyline)
-                        self.mMapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
-                    }
+                guard let response = response else
+                {
+                    //TODO: show response not available in an alert
+                    return
+                }
+                
+                for route in response.routes
+                {
+                    self.mMapView.addOverlay(route.polyline)
+                    self.mMapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
                 }
             }
-            else
-            {
-                //TODO: Alert User
-            }
         }
-    
-        func createDirectionRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request
+        else
         {
-            let destination_coordinate = mDestination!.coordinate
-            let starting_location = MKPlacemark(coordinate: coordinate)
-            let destination = MKPlacemark(coordinate: destination_coordinate)
-    
-            let request = MKDirections.Request()
-            request.source = MKMapItem(placemark: starting_location)
-            request.destination = MKMapItem(placemark: destination)
-            request.transportType = .automobile
-            request.requestsAlternateRoutes = false
-            return request
+            //TODO: Alert User
         }
+    }
+    
+    func createDirectionRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request
+    {
+        let destination_coordinate = mDestination!.coordinate
+        let starting_location = MKPlacemark(coordinate: coordinate)
+        let destination = MKPlacemark(coordinate: destination_coordinate)
+        
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: starting_location)
+        request.destination = MKMapItem(placemark: destination)
+        request.transportType = self.mTransportType
+        request.requestsAlternateRoutes = false
+        return request
+    }
     
     @IBAction func findWayButtonClicked(_ sender: Any) {
-                getDirections()
+        getDirections()
     }
     
     func removeOverlaysAndAnnotations()
@@ -188,16 +193,28 @@ class ViewController: UIViewController {
         mMapView.removeOverlays(mMapView.overlays)
         mMapView.removeAnnotations(mMapView.annotations)
     }
+    
+    @IBAction func transportationTypeChanged(_ sender: Any) {
+        switch mSegmentedControl.selectedSegmentIndex {
+        case 0:
+            mTransportType = .automobile
+        case 1:
+            mTransportType = .walking
+        default:
+            break
+        }
+    }
+    
+    func showAlert(title: String, message: String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "okay", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension ViewController: CLLocationManagerDelegate
 {
-    //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    //        guard let location = locations.last else {return}
-    //        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-    //        let region = MKCoordinateRegion.init(center: center, latitudinalMeters: self.REGION_IN_METERS, longitudinalMeters: self.REGION_IN_METERS)
-    //        mMapView.setRegion(region, animated: true)
-    //    }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkLocationAuthorization()
@@ -208,7 +225,14 @@ extension ViewController: MKMapViewDelegate
 {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay as! MKPolyline)
-        renderer.strokeColor = .blue
+        if(mTransportType == .automobile)
+        {
+            renderer.strokeColor = .blue
+        }
+        else if(mTransportType == .walking)
+        {
+            renderer.strokeColor = .green
+        }
         return renderer
     }
 }

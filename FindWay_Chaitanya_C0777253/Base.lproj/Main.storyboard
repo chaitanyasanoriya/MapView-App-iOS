@@ -142,6 +142,19 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="NLb-RD-8z9">
+                                <rect key="frame" x="215" y="44" width="179" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Hg7-Qj-bk5"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Automobile"/>
+                                    <segment title="Walking"/>
+                                </segments>
+                                <connections>
+                                    <action selector="transportationTypeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="fyV-Wp-CGS"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -152,12 +165,15 @@
                             <constraint firstAttribute="bottom" secondItem="990-Go-qEX" secondAttribute="bottom" id="UAb-mi-n99"/>
                             <constraint firstItem="9xT-hH-bke" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="bw5-oq-9SB"/>
                             <constraint firstItem="9xT-hH-bke" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="eeQ-Q9-Mqf"/>
+                            <constraint firstItem="NLb-RD-8z9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="qim-xp-kvy"/>
                             <constraint firstAttribute="trailing" secondItem="990-Go-qEX" secondAttribute="trailing" id="vW0-eU-wSi"/>
+                            <constraint firstItem="NLb-RD-8z9" firstAttribute="trailing" secondItem="PDB-Q1-2n3" secondAttribute="trailing" id="yne-1r-hKj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="mMapView" destination="990-Go-qEX" id="tNn-80-pxR"/>
+                        <outlet property="mSegmentedControl" destination="NLb-RD-8z9" id="3eh-KS-eNv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
