@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         }
         else
         {
-            // Code Add Alert
+            showAlert(title: "Location Services are Disabled", message: "The application required Location Services to be enabled to show your location and directions. Please enable Location Services from settings")
         }
     }
     
@@ -74,8 +74,7 @@ class ViewController: UIViewController {
             mLocationManager.startUpdatingLocation()
             break
         case .denied:
-            // Code Add Alert
-            break
+            showAlert(title: "Location Permissions Denied!", message: "The application required Location Permissions to be enabled to show your location and directions. Please Allow Location Permissions from settings")
         case .notDetermined:
             mLocationManager.requestWhenInUseAuthorization()
         case .restricted:
@@ -117,9 +116,7 @@ class ViewController: UIViewController {
             }
             
             if placemarks?.count ?? 0 > 0 {
-                let pm = placemarks?[0] as! CLPlacemark
-                
-                // not all places have thoroughfare & subThoroughfare so validate those values
+                let pm = placemarks![0]
                 annotation.title = pm.thoroughfare ?? "nil" + ", " + pm.subThoroughfare!
                 annotation.subtitle = pm.subLocality
                 self.mMapView.addAnnotation(annotation)
@@ -131,7 +128,6 @@ class ViewController: UIViewController {
                 self.mMapView.addAnnotation(annotation)
                 print("Problem with the data received from geocoder")
             }
-            //            places.append(["name":annotation.title,"latitude":"\(newCoordinates.latitude)","longitude":"\(newCoordinates.longitude)"])
         })
     }
     
@@ -139,7 +135,7 @@ class ViewController: UIViewController {
     {
         guard let location = mLocationManager.location?.coordinate else
         {
-            //TODO: Alert User
+            showAlert(title: "Error", message: "The Application was not able to find your current location, please try again later.")
             return
         }
         if mDestination != nil
@@ -149,11 +145,9 @@ class ViewController: UIViewController {
             let directions = MKDirections(request: request)
             
             directions.calculate { [unowned self] (response, error) in
-                //TODO: Handle error if needed
-                
                 guard let response = response else
                 {
-                    //TODO: show response not available in an alert
+                    self.showAlert(title: "Error", message: "Directions could not be calculated")
                     return
                 }
                 
@@ -166,7 +160,7 @@ class ViewController: UIViewController {
         }
         else
         {
-            //TODO: Alert User
+            showAlert(title: "Destination Not Selected", message: "Please select a destination before trying to find a way.")
         }
     }
     
