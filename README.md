@@ -12,7 +12,7 @@ Basic:
 <br/><br/>
 Marked Location:
 <br/>
-![Marked Location](screenshots/marked.png)
+![Marked Location](screenshots/marker.png)
 <br/><br/>
 Route for Automobile:
 <br/>
